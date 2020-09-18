@@ -1,44 +1,76 @@
-const config = require('tailwindcss/defaultConfig');
+import fs from 'fs'
+import path from 'path'
+const theme = require('tailwindcss/defaultTheme');
 
-/*{
-    tokens: {
-      colors: {
-        $gray500: 'hsl(206,10%,76%)',
-        $blue500: 'hsl(206,100%,50%)',
-        $purple500: 'hsl(252,78%,60%)',
-        $green500: 'hsl(148,60%,60%)',
-        $red500: 'hsl(352,100%,62%)',
-      },
-      space: {
-        $1: '5px',
-        $2: '10px',
-        $3: '15px',
-      },
-      fontSizes: {
-        $1: '12px',
-        $2: '13px',
-        $3: '15px',
-      },
-      fonts: {
-        $untitled: 'Untitled Sans, apple-system, sans-serif',
-        $mono: 'Söhne Mono, menlo, monospace',
-      },
-      fontWeights: {},
-      lineHeights: {},
-      letterSpacings: {},
-      sizes: {},
-      borderWidths: {},
-      borderStyles: {},
-      radii: {},
-      shadows: {},
-      zIndices: {},
-      transitions: {},
-    },
-  }*/
+const prefix = '$';
 
-function generateTokens(config: any) {
-
+function simpleMapper<T extends string | number | symbol>(obj: Record<T, string>): TokenSet {
+    return (Object.keys(obj) as T[]).reduce((set, key) => {
+        set[prefix + key] = obj[key];
+        return set;
+    }, {} as TokenSet)
 }
 
-const stitchesTokens = generateTokens(config);
-console.log(config);
+function stitchifyColors(colors: TailwindColorSet): TokenSet {
+    const stitchColors: TokenSet = {};
+
+    for (const color in colors) {
+        const prefixedColor = prefix + color;
+        const value = colors[color as TailwindColor];
+
+        if (typeof value === 'string') {
+            stitchColors[prefixedColor] = value;
+        } else {
+            for (const weight in value) {
+                stitchColors[prefixedColor + weight] = value[weight as TailwindWeight]; 
+            }
+        }
+    }
+
+    return stitchColors;
+}
+
+function stitchifyFonts(fonts: TailwindFontFamilySet): TokenSet {
+    const stitchFonts: TokenSet = {};
+
+    for (const key in fonts) {
+        stitchFonts[key] = fonts[key as TailwindFontFamily].join();
+    }
+
+    return stitchFonts;
+}
+
+function generateConfig(theme: TailwindTheme): StitchesConfig {
+    const tokens: Partial<TokenList> = {
+        colors: stitchifyColors(theme.colors),
+        space: simpleMapper(theme.spacing),
+        sizes: simpleMapper(theme.width(key => theme[key])),
+        fonts: stitchifyFonts(theme.fontFamily),
+        fontSizes: simpleMapper(theme.fontSize),
+        fontWeights: simpleMapper(theme.fontWeight),
+        lineHeights: simpleMapper(theme.lineHeight),
+        letterSpacings: simpleMapper(theme.letterSpacing),
+        borderWidths: simpleMapper(theme.borderWidth),
+        radii: simpleMapper(theme.borderRadius),
+        shadows: simpleMapper(theme.boxShadow),
+        zIndices: simpleMapper(theme.zIndex),
+    };
+
+    const breakpoints = simpleMapper(theme.screens);
+
+    return { 
+        tokens,
+        breakpoints 
+    };
+}
+
+const config = generateConfig(theme);
+
+function generateFileContents(config: StitchesConfig) {
+    return `const config = ${JSON.stringify(config)}; export default config`;
+}
+
+const fileContents = generateFileContents(config);
+fs.writeFileSync(path.join(__dirname, '..', 'dist', 'config.js'), fileContents);
+
+console.log('Successfully exported Tailwind -> Stitches config! 🎉')
