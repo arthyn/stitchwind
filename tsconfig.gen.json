@@ -1,0 +1,13 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "declaration": false,
+        "esModuleInterop": true
+    },
+    "exclude": [
+        "rollup.config.js",
+        "build/",
+        "dist/",
+        "src/token-loader/"
+      ]
+}

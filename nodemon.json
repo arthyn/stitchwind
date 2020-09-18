@@ -1,6 +1,6 @@
 {
     "watch": ["src"],
     "ext": ".ts,.js",
-    "ignore": [],
-    "exec": "ts-node --files ./src/index"
+    "ignore": ["/src/token-loader/*"],
+    "exec": "ts-node --files ./src/token-generator/index"
   }

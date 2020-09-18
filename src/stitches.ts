@@ -1,4 +1,4 @@
-type TokenType = 'colors' 
+export type TokenType = 'colors' 
     | 'space' 
     | 'fontSizes' 
     | 'fonts' 
@@ -13,11 +13,11 @@ type TokenType = 'colors'
     | 'zIndices'
     | 'transitions';
 
-type TokenSet = Record<string, string | number>;
+export type TokenSet = Record<string, string | number | Function>;
 
-type TokenList = Record<TokenType, TokenSet>;
+export type TokenList = Record<TokenType, TokenSet>;
 
-type StitchesConfig = {
+export type StitchesConfig = {
     tokens: Partial<TokenList>;
     breakpoints: TokenSet;
 };

@@ -1,9 +1,9 @@
-type TailwindScreen = 'sm'
+export type TailwindScreen = 'sm'
     | 'md'
     | 'lg'
     | 'xl';
 
-type TailwindWeight = '100'
+export type TailwindWeight = '100'
     | '200'
     | '300'
     | '400'
@@ -13,7 +13,7 @@ type TailwindWeight = '100'
     | '800'
     | '900';
 
-type TailwindColor = 'transparent'
+export type TailwindColor = 'transparent'
     | 'current'
     | 'black'
     | 'white'
@@ -28,9 +28,9 @@ type TailwindColor = 'transparent'
     | 'purple'
     | 'pink';
 
-type TailwindColorScale = Record<TailwindWeight, string>;
+export type TailwindColorScale = Record<TailwindWeight, string>;
 
-type TailwindSpacing = '0'
+export type TailwindSpacing = '0'
     | '1'
     | '2'
     | '3'
@@ -50,7 +50,7 @@ type TailwindSpacing = '0'
     | '64'
     | 'px'
 
-type TailwindSize = 'auto'
+export type TailwindSize = 'auto'
     | 'full'
     | 'screen'
     | '1/2'
@@ -80,9 +80,9 @@ type TailwindSize = 'auto'
     | '10/12'
     | '11/12';
 
-type TailwindFontFamily = 'sans' | 'serif' | 'mono';
+export type TailwindFontFamily = 'sans' | 'serif' | 'mono';
 
-type TailwindFontSize = 'xs'
+export type TailwindFontSize = 'xs'
     | 'sm'
     | 'base'
     | 'lg'
@@ -93,7 +93,7 @@ type TailwindFontSize = 'xs'
     | '5xl'
     | '6xl';
 
-type TailwindFontWeight = 'hairline'
+export type TailwindFontWeight = 'hairline'
     | 'thin'
     | 'light'
     | 'normal'
@@ -103,7 +103,7 @@ type TailwindFontWeight = 'hairline'
     | 'extrabold'
     | 'black';
 
-type TailwindLineHeight = 'none'
+export type TailwindLineHeight = 'none'
     | 'tight'
     | 'snug'
     | 'normal'
@@ -118,27 +118,27 @@ type TailwindLineHeight = 'none'
     | '9'
     | '10';
 
-type TailwindLetterSpacing = 'tighter'
+export type TailwindLetterSpacing = 'tighter'
     | 'tight'
     | 'normal'
     | 'wide'
     | 'wider'
     | 'widest';
 
-type TailwindBorderWidth = 'default'
+export type TailwindBorderWidth = 'default'
     | '0'
     | '2'
     | '4'
     | '8';
 
-type TailwindBorderRadius = 'none'
+export type TailwindBorderRadius = 'none'
     | 'sm'
     | 'default'
     | 'md'
     | 'lg'
     | 'full';
 
-type TailwindBoxShadow = 'xs'
+export type TailwindBoxShadow = 'xs'
     | 'sm'
     | 'default'
     | 'md'
@@ -149,7 +149,7 @@ type TailwindBoxShadow = 'xs'
     | 'outline'
     | 'none';
 
-type TailwindZIndex = 'auto'
+export type TailwindZIndex = 'auto'
     | '0'
     | '10'
     | '20'
@@ -157,23 +157,23 @@ type TailwindZIndex = 'auto'
     | '40'
     | '50';
 
-type TailwindScreenSet = Record<TailwindScreen, string>;
-type TailwindColorSet = Record<TailwindColor, string | TailwindColorScale>;
-type TailwindSpacingSet = Record<TailwindSpacing, string>;
-type TailwindSizingSet = Record<TailwindSize | TailwindSpacing, string>;
-type TailwindFontFamilySet = Record<TailwindFontFamily, string[]>;
-type TailwindFontSizeSet = Record<TailwindFontSize, string>;
-type TailwindFontWeightSet = Record<TailwindFontWeight, TailwindWeight>;
-type TailwindLineHeightSet = Record<TailwindLineHeight, string>;
-type TailwindLetterSpacingSet = Record<TailwindLetterSpacing, string>;
-type TailwindBorderWidthSet = Record<TailwindBorderWidth, string>;
-type TailwindBorderRadiusSet = Record<TailwindBorderRadius, string>;
-type TailwindBoxShadowSet = Record<TailwindBoxShadow, string>;
-type TailwindZIndexSet = Record<TailwindZIndex, string>;
+export type TailwindScreenSet = Record<TailwindScreen, string>;
+export type TailwindColorSet = Record<TailwindColor, string | TailwindColorScale>;
+export type TailwindSpacingSet = Record<TailwindSpacing, string>;
+export type TailwindSizingSet = Record<TailwindSize | TailwindSpacing, string>;
+export type TailwindFontFamilySet = Record<TailwindFontFamily, string[]>;
+export type TailwindFontSizeSet = Record<TailwindFontSize, string>;
+export type TailwindFontWeightSet = Record<TailwindFontWeight, TailwindWeight>;
+export type TailwindLineHeightSet = Record<TailwindLineHeight, string>;
+export type TailwindLetterSpacingSet = Record<TailwindLetterSpacing, string>;
+export type TailwindBorderWidthSet = Record<TailwindBorderWidth, string>;
+export type TailwindBorderRadiusSet = Record<TailwindBorderRadius, string>;
+export type TailwindBoxShadowSet = Record<TailwindBoxShadow, string>;
+export type TailwindZIndexSet = Record<TailwindZIndex, string>;
 
-type TailwindThemeFunction = (key: keyof TailwindTheme) => typeof TailwindTheme[key];
+export type TailwindThemeFunction = (key: keyof TailwindTheme) => TailwindTheme[typeof key];
 
-type TailwindTheme = {
+export type TailwindTheme = {
     screens: TailwindScreenSet;
     colors: TailwindColorSet;
     spacing: TailwindSpacingSet;

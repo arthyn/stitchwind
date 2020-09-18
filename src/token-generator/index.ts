@@ -1,5 +1,15 @@
 import fs from 'fs'
 import path from 'path'
+import { TokenList, TokenSet, StitchesConfig } from '../stitches';
+import { 
+    TailwindColor, 
+    TailwindColorSet, 
+    TailwindWeight,
+    TailwindFontFamily,
+    TailwindFontFamilySet,
+    TailwindTheme
+} from '../tailwindcss';
+const JSONFormatter = require('simple-json-formatter');
 const theme = require('tailwindcss/defaultTheme');
 
 const prefix = '$';
@@ -34,7 +44,9 @@ function stitchifyFonts(fonts: TailwindFontFamilySet): TokenSet {
     const stitchFonts: TokenSet = {};
 
     for (const key in fonts) {
-        stitchFonts[key] = fonts[key as TailwindFontFamily].join();
+        stitchFonts[key] = fonts[key as TailwindFontFamily]
+            .map(family => family.replace(/"/g, '\\"'))
+            .join();
     }
 
     return stitchFonts;
@@ -67,10 +79,13 @@ function generateConfig(theme: TailwindTheme): StitchesConfig {
 const config = generateConfig(theme);
 
 function generateFileContents(config: StitchesConfig) {
-    return `const config = ${JSON.stringify(config)}; export default config`;
+    const json = JSON.stringify(config);
+    return `import { StitchesConfig } from '../stitches'
+const config: StitchesConfig = ${JSONFormatter.format(json, '\t')};
+export default config`;
 }
 
 const fileContents = generateFileContents(config);
-fs.writeFileSync(path.join(__dirname, '..', 'dist', 'config.js'), fileContents);
+fs.writeFileSync(path.join(__filename, '..', '..', '..', 'src', 'token-loader', 'config.ts'), fileContents);
 
 console.log('Successfully exported Tailwind -> Stitches config! 🎉')

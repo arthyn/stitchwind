@@ -3,17 +3,26 @@
   "version": "0.1.0",
   "description": "This package loads the default theme from Tailwind into Stitches as tokens and breakpoints.",
   "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/token-loader/index.d.ts",
   "scripts": {
-    "start:dev": "nodemon"
+    "gen:dev": "nodemon",
+    "gen:build": "rimraf ./build && tsc --project ./tsconfig.gen.json",
+    "gen:run": "npm run gen:build && node build/token-generator/index.js",
+    "bundle": "npm run gen:run && rollup -c"
   },
   "author": "Hunter Miller <hunter@hmiller.dev> (https://hmiller.dev)",
-  "license": "ISC",
-  "dependencies": {
-    "tailwindcss": "^1.8.10"
-  },
+  "license": "MIT",
+  "dependencies": {},
   "devDependencies": {
     "@types/node": "^14.11.1",
     "nodemon": "^2.0.4",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.27.1",
+    "rollup-plugin-terser": "^7.0.2",
+    "rollup-plugin-typescript2": "^0.27.2",
+    "simple-json-formatter": "^1.0.2",
+    "tailwindcss": "^1.8.10",
     "ts-node": "^9.0.0",
     "typescript": "^4.0.2"
   }
