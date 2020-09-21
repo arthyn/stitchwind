@@ -44,7 +44,8 @@ function stitchifyFonts(fonts: TailwindFontFamilySet): TokenSet {
     const stitchFonts: TokenSet = {};
 
     for (const key in fonts) {
-        stitchFonts[key] = fonts[key as TailwindFontFamily]
+        const prefixedFont = prefix + key;
+        stitchFonts[prefixedFont] = fonts[key as TailwindFontFamily]
             .map(family => family.replace(/"/g, '\\"'))
             .join();
     }
