@@ -1,5 +1,5 @@
 import config from './config'
-import { TokenSet, StitchesConfig } from '../stitches'
+import { StitchwindInternalConfig } from '../stitches'
 
 type index = string | number;
 
@@ -29,19 +29,21 @@ function refit_keys(o: AnObject, map: (key: string) => string): object {
     return build;
 }
 
-export function usePrefix(prefix: string, config: StitchesConfig): StitchesConfig {
+export function usePrefix<T extends StitchwindInternalConfig>(prefix: string, config: T): T {
     return {
         ...config,
         tokens: refit_keys(config.tokens, (key) => key.replace('$', prefix))
     }
 }
 
-function prepConfig(config: StitchesConfig): StitchesConfig {
+type BreakpointSet<T extends StitchwindInternalConfig> = Record<keyof T['breakpoints'], (css: string) => string>;
+
+function prepConfig<T extends StitchwindInternalConfig>(config: T): T & { breakpoints: BreakpointSet<T>} {  
     const breakpoints = config.breakpoints;
-    const breakpointFunctions: TokenSet = {};
+    const breakpointFunctions: BreakpointSet<T> = {} as BreakpointSet<T>;
 
     for (const size in breakpoints) {
-        breakpointFunctions[size] = (rule: string): string => `@media (min-width: ${breakpoints[size]}) { ${rule} }`;
+        breakpointFunctions[size as keyof T['breakpoints']] = (rule: string): string => `@media (min-width: ${breakpoints[size]}) { ${rule} }`;
     }
 
     return {

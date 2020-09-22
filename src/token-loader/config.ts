@@ -1,5 +1,4 @@
-import { StitchesConfig } from '../stitches'
-const config: StitchesConfig = {
+const config = {
 	"tokens": {
 		"colors": {
 			"$transparent": "transparent",

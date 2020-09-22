@@ -1,6 +1,6 @@
 import fs from 'fs'
 import path from 'path'
-import { TokenList, TokenSet, StitchesConfig } from '../stitches';
+import { TokenList, TokenSet, StitchwindInternalConfig } from '../stitches';
 import { 
     TailwindColor, 
     TailwindColorSet, 
@@ -53,7 +53,7 @@ function stitchifyFonts(fonts: TailwindFontFamilySet): TokenSet {
     return stitchFonts;
 }
 
-function generateConfig(theme: TailwindTheme): StitchesConfig {
+function generateConfig(theme: TailwindTheme): StitchwindInternalConfig {
     const tokens: Partial<TokenList> = {
         colors: stitchifyColors(theme.colors),
         space: simpleMapper(theme.spacing),
@@ -79,10 +79,9 @@ function generateConfig(theme: TailwindTheme): StitchesConfig {
 
 const config = generateConfig(theme);
 
-function generateFileContents(config: StitchesConfig) {
+function generateFileContents(config: StitchwindInternalConfig) {
     const json = JSON.stringify(config);
-    return `import { StitchesConfig } from '../stitches'
-const config: StitchesConfig = ${JSONFormatter.format(json, '\t')};
+    return `const config = ${JSONFormatter.format(json, '\t')};
 export default config`;
 }
 
