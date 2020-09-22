@@ -13,11 +13,11 @@ export type TokenType = 'colors'
     | 'zIndices'
     | 'transitions';
 
-export type TokenSet = Record<string, string | number | Function>;
+export type TokenSet = Record<string, string>;
 
 export type TokenList = Record<TokenType, TokenSet>;
 
-export type StitchesConfig = {
+export type StitchwindInternalConfig = {
     tokens: Partial<TokenList>;
     breakpoints: TokenSet;
 };

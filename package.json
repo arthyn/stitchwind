@@ -1,6 +1,6 @@
 {
   "name": "stitchwind",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "This package loads the default theme from Tailwind into Stitches as tokens and breakpoints.",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
